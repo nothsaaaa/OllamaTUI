@@ -4,6 +4,7 @@ from colorama import Fore
 import threading
 import time
 from request import *
+from utils import *
 
 # Define a simple loading animation
 def loading_animation(stop_event):
@@ -15,6 +16,7 @@ def loading_animation(stop_event):
         time.sleep(0.1)
 
 def main():
+    figlet("OllamaTUI")
     print("OllamaTUI by Ashlyn (v0.1)")
     print("Commit date: 10/06/2024 (MM/DD/YYYY)\n")
     
