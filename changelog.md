@@ -1,8 +1,2 @@
-
 ## Changelog
-
-### v0.1
-Base of project
-
-#### Commit 13cb2db
-Add colorful intro
+don't even bother with this it's not gonna work out
