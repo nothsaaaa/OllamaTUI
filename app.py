@@ -17,8 +17,7 @@ def loading_animation(stop_event):
 
 def main():
     figlet("OllamaTUI")
-    print("OllamaTUI by Ashlyn (v0.1)")
-    print("Commit date: 10/06/2024 (MM/DD/YYYY)\n")
+    print("OllamaTUI by Ashlyn (v0.1)\n")
     
     formatted_models = fetch_tags()
     models = [model.split('] ')[1] for model in formatted_models]
