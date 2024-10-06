@@ -1,12 +1,11 @@
 import requests
 import logging
-from colorama import Fore
+from colorama import Fore, Style
 import threading
 import time
 from request import *
 from utils import *
 
-# Define a simple loading animation
 def loading_animation(stop_event):
     animation = "|/-\\"
     idx = 0
@@ -17,11 +16,14 @@ def loading_animation(stop_event):
 
 def main():
     figlet("OllamaTUI")
-    print("OllamaTUI by Ashlyn (v0.1)\n")
+    print("OllamaTUI by Ashlyn (v0.1)")
+    print(f"\033[3m{Style.DIM}because ollama isn't enough...\033[0m\n")
+    #will not render on terminals without ansi escape codes
     
     formatted_models = fetch_tags()
     models = [model.split('] ')[1] for model in formatted_models]
-    
+
+    # Model selection menu    
     for model in formatted_models:
         print(model)
     
@@ -35,20 +37,24 @@ def main():
                 print("Invalid selection. Please try again.")
         except ValueError:
             print("Invalid input. Please enter a numerical value.")
-    
+
     model = selected_model
     messages = []
-
+    clear_screen()
+    print("Loading model...")
+    load(selected_model)
+    clear_screen()
+    print(f"{Fore.GREEN}MODEL LOADED{Fore.RESET}")
     print("Start chatting (type 'exit' to quit):")
-    
+
+    # Chatloop
     while True:
         user_input = input(f"{Fore.GREEN}> ")
         
         if user_input.lower() == 'exit':
-            print("Exiting the chat. Goodbye!")
+            print(f"{Fore.GREEN}Exiting the chat. Goodbye!{Fore.RESET}")
             break
         
-        # Append user message to messages
         messages.append({
             "role": "user",
             "content": user_input
@@ -59,9 +65,9 @@ def main():
         loading_thread.start()
         
         response = chat(model, messages, stream=True)
-        stop_event.set()  # Stop the loading animation
-        loading_thread.join()  # Wait for the thread to finish
-
+        stop_event.set() # Stop the loading animation
+        loading_thread.join() # Wait for the thread to finish
+        
         if response:
             final_response = ""
             for res in response:
@@ -72,7 +78,6 @@ def main():
                 if res.get('done'):
                     break
             
-            # Append assistant's response to messages
             messages.append({
                 "role": "assistant",
                 "content": final_response

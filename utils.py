@@ -14,3 +14,7 @@ def figlet(text):
 
     for line in ascii_art.splitlines():
         print(random_color(line))
+
+def clear_screen():
+    print("\n" * 100)
+

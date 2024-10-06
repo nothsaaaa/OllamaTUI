@@ -46,3 +46,16 @@ def chat(model, messages, tools=None, stream=True, options=None):
     except requests.exceptions.RequestException as e:
         print(f"An error occurred: {e}")
         return None
+
+# The entire reason this works the way it does is because Ollama doesn't support literally just loading models. You gotta send a chat message for it to start loading.
+def load(model):
+    messages = [{"role": "user", "content": "Hi"}]
+    response = chat(model, messages)
+    
+    if response:
+        
+        if isinstance(response, list):
+            return response[-1].get("content") if response else None
+        return response.get("content")
+    
+    return None
