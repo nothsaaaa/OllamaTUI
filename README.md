@@ -1,5 +1,6 @@
 ## OllamaTUI by Ashlyn
-Simplistic OllamaTUI
+A slightly improved Ollama inference program.
+![Live Inference Gif](.github/ezgif-7-e9733d6969.gif
 
 ### Install
 1. Install [Ollama](https://ollama.com/)
